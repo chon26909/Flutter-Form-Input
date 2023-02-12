@@ -21,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
       .toList();
   var channel = 'Facebook';
 
+  var email = '';
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,17 +39,22 @@ class _HomeScreenState extends State<HomeScreen> {
               buildSwitch(),
               buildSlider(),
               buildDropdown(),
+              buldForm(),
               ElevatedButton(
                 onPressed: () {
+                  if (!(formKey.currentState?.validate() ?? false)) return;
+
+                  formKey.currentState?.save();
                   print(
                       'Name: ${nameController.text} ${surnameController.text}');
                   print('gender ${gender}');
-
                   print("newsletter ${newsletter}");
                   print("driver ${driver}");
                   print("married ${married}");
                   print("child ${child}");
                   print("age ${age}");
+                  print("chanel ${channel}");
+                  print("email ${email}");
                 },
                 child: const Text("บันทึก"),
               )
@@ -56,6 +64,30 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buldForm() => Form(
+      key: formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: "อีเมล",
+            ),
+            maxLength: 50,
+            keyboardType: TextInputType.emailAddress,
+            onSaved: (value) => email = value ?? "",
+            validator: (value) {
+              value ??= "";
+              if (value.isEmpty) return "กรุณากรอกข้อมูล";
+              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                  .hasMatch(value)) {
+                return 'อีเมลไม่ถูกต้อง';
+              }
+              return null;
+            },
+          )
+        ],
+      ));
 
   Widget buildDropdown() => DropdownButton(
         value: channel,
@@ -75,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildSwitch() => Column(
         children: [
           SwitchListTile(
-            title: const Text("แต่งงาน?"),
+            title: const Text("แต่งงาน"),
             value: married,
             onChanged: (value) => setState(() => married = value),
           ),
           SwitchListTile(
-            title: const Text("มีบุตร?"),
+            title: const Text("มีบุตร"),
             value: child,
             onChanged: (value) => setState(() => child = value),
           )
