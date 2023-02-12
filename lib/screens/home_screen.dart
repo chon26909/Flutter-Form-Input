@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  final nameController = TextEditingController();
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-  HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  var gender = '';
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +22,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               buildTextField(),
+              buildRadio(),
               ElevatedButton(
                 onPressed: () {
-                  print('Name: ${nameController.text}');
+                  print(
+                      'Name: ${nameController.text} ${surnameController.text}');
                 },
                 child: const Text("บันทึก"),
               )
@@ -28,12 +37,42 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  TextField buildTextField() => TextField(
-        decoration: const InputDecoration(
-          labelText: "ชื่อ",
-        ),
-        maxLength: 50,
-        keyboardType: TextInputType.name,
-        controller: nameController,
+  Widget buildRadio() => Column(
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          const RadioListTile(
+            title: Text('ชาย'),
+            value: 'male',
+            groupValue: 'male',
+            onChanged: null,
+          ),
+          const RadioListTile(
+            title: Text('หญิง'),
+            value: 'female',
+            groupValue: 'male',
+            onChanged: null,
+          ),
+        ],
+      );
+
+  Widget buildTextField() => Column(
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              labelText: "ชื่อ",
+            ),
+            maxLength: 50,
+            keyboardType: TextInputType.name,
+            controller: nameController,
+          ),
+          TextField(
+            decoration: const InputDecoration(
+              labelText: "นามสกุล",
+            ),
+            maxLength: 50,
+            keyboardType: TextInputType.name,
+            controller: surnameController,
+          ),
+        ],
       );
 }
