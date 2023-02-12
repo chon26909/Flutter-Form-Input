@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_input/widgets/checkbox_form_field.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,8 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
       .toList();
   var channel = 'Facebook';
 
-  var email = '';
   final formKey = GlobalKey<FormState>();
+  var email = '';
+  var agreement = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print("age ${age}");
                   print("chanel ${channel}");
                   print("email ${email}");
+                  print("agreemnt ${agreement}");
                 },
                 child: const Text("บันทึก"),
               )
@@ -83,6 +86,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   .hasMatch(value)) {
                 return 'อีเมลไม่ถูกต้อง';
               }
+              return null;
+            },
+          ),
+          CheckboxFormField(
+            title: const Text("ยอมรับข้อตกลง"),
+            initialValue: agreement,
+            onSaved: (value) => agreement = value ?? false,
+            validator: (value) {
+              value ??= false;
+              if (!value) {
+                return 'กรุณายอมรับข้อตกลง';
+              }
+
               return null;
             },
           )
