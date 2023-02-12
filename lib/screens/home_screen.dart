@@ -11,6 +11,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
   var gender = 'male';
+  var newsletter = false;
+  var driver = false;
+  var married = false;
+  var child = false;
+  var age = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               buildTextField(),
               buildRadio(),
+              buildCheckbox(),
+              buildSwitch(),
+              buildSlider(),
               ElevatedButton(
                 onPressed: () {
                   print(
                       'Name: ${nameController.text} ${surnameController.text}');
                   print('gender ${gender}');
+
+                  print("newsletter ${newsletter}");
+                  print("driver ${driver}");
+                  print("married ${married}");
+                  print("child ${child}");
+                  print("age ${age}");
                 },
                 child: const Text("บันทึก"),
               )
@@ -37,6 +51,45 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buildSlider() => Slider(
+        value: age,
+        min: 0.0,
+        max: 100.0,
+        label: age.round().toString(),
+        divisions: 100,
+        onChanged: (value) => setState(() => age = value),
+      );
+
+  Widget buildSwitch() => Column(
+        children: [
+          SwitchListTile(
+            title: const Text("แต่งงาน?"),
+            value: married,
+            onChanged: (value) => setState(() => married = value),
+          ),
+          SwitchListTile(
+            title: const Text("มีบุตร?"),
+            value: child,
+            onChanged: (value) => setState(() => child = value),
+          )
+        ],
+      );
+
+  Widget buildCheckbox() => Column(
+        children: [
+          CheckboxListTile(
+            title: const Text("สมัครรับจดหมายข่าว"),
+            value: newsletter,
+            onChanged: (value) => setState(() => newsletter = value ?? false),
+          ),
+          CheckboxListTile(
+            title: const Text("มีใบขับขี่รถยนต์"),
+            value: driver,
+            onChanged: (value) => setState(() => driver = value ?? false),
+          )
+        ],
+      );
 
   Widget buildRadio() => Column(
         // ignore: prefer_const_literals_to_create_immutables
