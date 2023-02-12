@@ -16,6 +16,10 @@ class _HomeScreenState extends State<HomeScreen> {
   var married = false;
   var child = false;
   var age = 0.0;
+  var channels = ['Facebook', 'Twitter', 'Instagram', 'Line']
+      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+      .toList();
+  var channel = 'Facebook';
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               buildCheckbox(),
               buildSwitch(),
               buildSlider(),
+              buildDropdown(),
               ElevatedButton(
                 onPressed: () {
                   print(
@@ -51,6 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget buildDropdown() => DropdownButton(
+        value: channel,
+        items: channels,
+        onChanged: (value) => setState(() => channel = value.toString()),
+      );
 
   Widget buildSlider() => Slider(
         value: age,

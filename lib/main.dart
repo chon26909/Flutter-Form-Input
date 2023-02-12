@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
     // ignore: prefer_const_constructors
     return MaterialApp(
       title: "ลงทะเบียน",
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
