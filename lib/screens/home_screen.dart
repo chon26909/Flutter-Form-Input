@@ -10,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
-  var gender = '';
+  var gender = 'male';
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   print(
                       'Name: ${nameController.text} ${surnameController.text}');
+                  print('gender ${gender}');
                 },
                 child: const Text("บันทึก"),
               )
@@ -40,17 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildRadio() => Column(
         // ignore: prefer_const_literals_to_create_immutables
         children: [
-          const RadioListTile(
-            title: Text('ชาย'),
+          RadioListTile(
+            title: const Text('ชาย'),
             value: 'male',
-            groupValue: 'male',
-            onChanged: null,
+            groupValue: gender,
+            onChanged: (value) => setState(() => gender = value.toString()),
           ),
-          const RadioListTile(
-            title: Text('หญิง'),
+          RadioListTile(
+            title: const Text('หญิง'),
             value: 'female',
-            groupValue: 'male',
-            onChanged: null,
+            groupValue: gender,
+            onChanged: (value) => setState(() => gender = value.toString()),
           ),
         ],
       );
